@@ -87,4 +87,9 @@ install.packages('installr')
 library(installr)
 updateR()
 
+getwd()
+
+file.exists("test-file.csv")
+
+file.exists("test-folder/test-file.csv")
 
