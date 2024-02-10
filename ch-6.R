@@ -93,3 +93,22 @@ file.exists("test-file.csv")
 
 file.exists("test-folder/test-file.csv")
 
+read_csv("datasets/star/districts.csv")
+
+# assign the distrit data to a variable
+
+district <- read_csv("datasets/star/districts.csv")
+
+district
+library(readxl)
+
+star <-  read_xlsx("datasets/star/star.xlsx")
+star
+
+excel_sheets("datasets/star/star.xlsx")
+
+read_excel("datasets/star/star.xlsx", range = cell_rows(1:10))
+
+view(star)
+
+glimpse(star)
