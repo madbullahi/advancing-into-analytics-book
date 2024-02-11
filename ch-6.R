@@ -184,4 +184,132 @@ is.vector(star$treadssk)
            districts )
 
  
+ # dplyr and Power of the Pipe (%>%) Operator.
  
+ star %>% 
+   group_by(classk) %>% 
+   summarise(average_reading = mean(treadssk)) %>% 
+   arrange(desc(average_reading))
+
+ # An index column to star
+ 
+ star_pivot <- star %>% 
+   select(c(schidkn, tmathssk, treadssk)) %>% 
+   mutate(index = row_number())
+
+ star_pivot 
+
+ # reshape the dataframe.
+ 
+ star_long <- star_pivot %>% 
+   pivot_longer(cols = c(tmathssk, treadssk), names_to = "test_type",
+                values_to = "score")
+ 
+ head(star_long)
+
+ # Rename tmathssk and treadssk to math and reading.
+ 
+ star_long <- star_long %>% 
+   mutate(test_type = recode(test_type, 
+                             tmathssk = "math",
+                             treadssk = "reading"))
+ 
+ head(star_long)
+
+ distinct(star_long, test_type) # the distinct() confirms all rows in test_type have bee renamed.
+ 
+ star_wide <- star_long %>% 
+   pivot_wider(values_from = score,
+               names_from = test_type)
+ 
+ 
+  head(star_wide)
+
+  # ggplot2
+  
+  ggplot(data = star,
+         aes(x = treadssk)) +
+    geom_histogram(bins = 25, fill = "pink")
+
+  
+
+  ggplot(data = star,
+         aes(x = classk, y = treadssk))+
+  geom_boxplot()
+ 
+  
+census_div <- read_csv("datasets/census/census-divisions.csv")
+census_div
+
+census <- read_csv("datasets/census/census.csv")
+census
+
+
+# combine the datasets census and cesus_div.
+
+census_join <- cross_join(select(census_div, "postal_code", "region", "division"), # select the columns to join.
+          census)
+
+census_join
+
+census_join <- census_join %>% 
+  arrange(desc(population))
+
+census_join
+
+census_join[,c(2:7)]
+
+
+census_join <- census_join %>% 
+  mutate(density = population / land_area)
+
+census_join
+
+census_grouped <- census_join %>% 
+  group_by(year)
+
+tail(census_grouped)
+
+censUs_year2015 <- census_grouped %>% 
+  filter(year == 2015)
+
+censUs_year2015
+
+# plot the relationship between land and population.
+ggplot(data = censUs_year2015,
+       aes(x =land_area, y = population)) +
+  geom_point()+
+  xlab("Land Area")+
+  ylab("Population")+
+  ggtitle("Population vs Land Area")
+
+
+# find the total population for each region in 2015.
+# i want to get the total population for each region in 2015.
+
+
+TotPopRegion <- censUs_year2015 %>%
+  group_by(region) %>%
+  summarise(total_population = sum(population))
+  
+  
+TotPopRegion  
+  
+  
+# create a table containing state names and populations for eah year 2010-2015.
+
+census_states <- census_grouped %>%
+  select(c(year, state, population)) %>% 
+  mutate(ID = row_number())
+  
+census_states
+
+
+# table for population of each year in individual column.
+
+census_states_wide <- census_states %>%
+  pivot_wider(names_from = "year", values_from = "population")
+
+head(census_states_wide)
+  
+  
