@@ -112,3 +112,76 @@ read_excel("datasets/star/star.xlsx", range = cell_rows(1:10))
 view(star)
 
 glimpse(star)
+
+library(psych)
+
+describe(star)
+
+?describe
+
+star[2:3, 1:3] # second row through the third column.
+
+star[2:3, 1:6]
+
+star[, c(1,3)]
+
+star$treadssk
+
+is.vector(star$treadssk)
+
+ my_vector <-  c(1, 2, 3, 4, 5)
+
+ my_vector[c(1,4)]
+
+ x <-  c(1, 2, 3, 4)
+ x
+ 
+ y <-  c(TRUE, FALSE, TRUE, FALSE)
+ y
+ 
+ z <-  x * y
+ 
+ 
+ head(star)
+
+ select(star, treadssk, tmathssk, schidkn) 
+
+ select(star, -treadssk, -tmathssk, -schidkn) 
+
+ select(star, -c(treadssk, tmathssk, schidkn)) 
+
+ star <-  select(star, tmathssk:totexpk)
+ star
+ 
+ star <-  mutate(star, newcolumn = tmathssk + treadssk)
+ star
+ 
+ star <-  rename(star, ttl_score = newcolumn)
+ star
+ 
+ arrange(star, desc(classk), treadssk)
+
+ filter(star, classk == "small.class") 
+
+ filter(star, treadssk >= 500) 
+
+ filter(star, classk == "small.class" & treadssk >= 500) 
+
+ star_grouped <-  group_by(star, classk) 
+ star_grouped 
+
+ summarise(star_grouped, avg_math = mean(tmathssk)) 
+
+ star <-  read_excel("datasets/star/star.xlsx")
+ star
+ 
+ districts <-  read_csv("datasets/star/districts.csv")
+ districts
+ 
+ # left outer join star on districts
+ 
+ left_join(select(star, schidkn, tmathssk, treadssk), 
+           districts )
+
+ 
+ 
