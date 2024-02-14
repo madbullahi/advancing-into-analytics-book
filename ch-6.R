@@ -312,4 +312,39 @@ census_states_wide <- census_states %>%
 
 head(census_states_wide)
   
-  
+
+
+
+
+mpg <- read_csv("datasets/mpg/mpg.csv") 
+
+mpg <-  mpg %>%
+  select(origin, cylinders, horsepower, mpg, weight)
+mpg
+
+mpg %>% 
+  count(origin)
+
+
+mpg %>%
+  count(origin, cylinders) %>%
+  pivot_wider(names_from = n, values_from =cylinders) # pivot_wider() function is used to reshape the data. values_from is the column to be reshaped and names_from is the column to be used as the new column names.
+
+
+
+mpg %>%
+  select(mpg, origin) %>%
+  describeBy(group = "origin")
+
+
+ggplot(data = mpg,
+       aes(x = mpg))+
+  geom_boxplot()+
+  facet_wrap(~origin)
+
+
+
+mpg_filered <- mpg %>%
+  filter(origin == "USA" | origin == "EUROPE") # filter the data to include only rows where the origin colunm is USA and EUROPE.
+
+head(mpg_filered)
