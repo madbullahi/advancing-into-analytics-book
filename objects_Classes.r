@@ -39,3 +39,6 @@ plothist
 
 shapiro.test(residuals(car.lm))  # p-value > 0.05, residuals are normally, if p-value < 0.05, residuals are not normally
 
+
+# Graphs and Charts
+
